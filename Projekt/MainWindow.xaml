@@ -1,0 +1,165 @@
+﻿<Window x:Class="Projekt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projekt"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1200">
+
+    <Window.Resources>
+        <local:NumberConverter x:Key="numberConverter" />
+
+
+        <Style TargetType="Ellipse" x:Key="ClickMoneyIcon">
+            <Setter Property="Fill" Value="Red"/>
+        </Style>
+        <Style TargetType="Ellipse" x:Key="TickMoneyIcon">
+            <Setter Property="Fill" Value="Blue"/>
+        </Style>
+
+    </Window.Resources>
+    <TabControl Name="tabs">
+        <TabItem Header="Main">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="GhostWhite"/>
+
+                <Button Width="100" Height="100" x:Name="CashButton" Click="CashButtonClicked" HorizontalAlignment="Left" Margin="0,-100,0,0" Content="Click Me!">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <Ellipse Fill="Red"/>
+                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Ellipse Grid.Row="0" Grid.Column="0" Height="20" Width="20" Style="{StaticResource ClickMoneyIcon}" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Name="ClickMoneyText" Text="{Binding ClickMoney, Converter={StaticResource numberConverter}}" Width="100" Height="30"/>
+                    <Ellipse Grid.Row="1" Grid.Column="0" Height="20" Width="20" Style="{StaticResource TickMoneyIcon}" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Name="TickMoneyText" Text="{Binding TickMoney, Converter={StaticResource numberConverter}}" Width="100" Height="30"/>
+                </Grid>
+                <StackPanel Name="UpgradeTabs" HorizontalAlignment="Right" Width="370" Orientation="Horizontal">
+                    <ItemsControl Width="180"  Name="TickContr" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="180" Height="100" Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                        <ColumnDefinition Width="110"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Column="1" Fill="LightBlue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{Binding Name}" Margin="0,5,0,0"></TextBlock>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,5,0,0">
+                                            <TextBlock Text="Count: "/>
+                                            <TextBlock Text="{Binding Count, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                            <TextBlock Text="{Binding BoughtCount, StringFormat=({0}), UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                            <TextBlock Text="Cost: "></TextBlock>
+                                            <Ellipse Style="{StaticResource ClickMoneyIcon}" Height="14" Width="14" VerticalAlignment="Top"/>
+                                            <TextBlock Text="{Binding Cost, Converter={StaticResource numberConverter}}" Margin="3,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="0">
+                                        <Button Click="UpgradeButtonClicked" VerticalAlignment="Stretch" Height="50" Content="Buy 1x"></Button>
+                                        <Button Click="Upgrade10ButtonClicked" VerticalAlignment="Stretch" Height="50" Content="Buy 10x"></Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <ItemsControl Width="180"  Name="ClickContr" Margin="10,0,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="180" Height="100" Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                        <ColumnDefinition Width="110"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Column="1" Fill="Pink" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{Binding Name}" Margin="0,5,0,0"></TextBlock>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,5,0,0">
+                                            <TextBlock Text="Count: "/>
+                                            <TextBlock Text="{Binding Count, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                            <TextBlock Text="{Binding BoughtCount, StringFormat=({0}), UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                            <TextBlock Text="Cost: "></TextBlock>
+                                            <Ellipse Style="{StaticResource TickMoneyIcon}" Height="14" Width="14" VerticalAlignment="Top"/>
+                                            <TextBlock Text="{Binding Cost, Converter={StaticResource numberConverter}}" Margin="3,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="0">
+                                        <Button Click="UpgradeButtonClicked" VerticalAlignment="Stretch" Height="50" Content="Buy 1x"></Button>
+                                        <Button Click="Upgrade10ButtonClicked" VerticalAlignment="Stretch" Height="50" Content="Buy 10x"></Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
+
+
+        <TabItem Header="Reset">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="GhostWhite"/>
+                <StackPanel Name="ResetStackPanel" Width="200" VerticalAlignment="Center">
+                    <Button Content="Reset" Height="70" Click="ResetButtonClicked"></Button>
+                    <TextBlock Text="{Binding ResetPoints, StringFormat=Current Reset Points: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding PotentialResetPoints, StringFormat=Reset Points after reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
+
+        <TabItem Header="Stats">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="GhostWhite"/>
+                <StackPanel Name="StatsStackPanel"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <TextBlock Text="{Binding ClicksThisReset, StringFormat=Clicks this reset: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalClicks, StringFormat=Total clicks: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TicksThisReset, StringFormat=Ticks this reset: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalTicks, StringFormat=Total ticks: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+
+                    <TextBlock Text="{Binding ClickMoneyThisReset, StringFormat=Click money this reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalClickMoney, StringFormat=Total clicks money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TickMoneyThisReset, StringFormat=Tick money this reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalTickMoney, StringFormat=Total tick money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Options">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="GhostWhite"/>
+                <StackPanel Width="100" VerticalAlignment="Center">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="0,10,0,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Content="Save" Height="50" Click="SaveButtonClicked"></Button>
+                    <Button Content="Load" Height="50" Click="LoadButtonClicked"></Button>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>

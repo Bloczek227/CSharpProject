@@ -1,0 +1,24 @@
+﻿<Window x:Class="Projekt.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projekt"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800">
+    <Grid>
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="GhostWhite"/>
+            <StackPanel Width="100" VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="0,10,0,0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Content="Continue" Height="50" Click="ContinueClicked"></Button>
+                <Button Content="New Game" Height="50" Click="NewGameClicked"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
