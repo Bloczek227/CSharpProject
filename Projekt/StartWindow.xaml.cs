@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 
 namespace Projekt
 {
@@ -6,15 +7,30 @@ namespace Projekt
     {
         private void ContinueClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(true);
+            MainWindow mainWindow = new(true);
             mainWindow.Show();
             Close();
         }
         private void NewGameClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(false);
-            mainWindow.Show();
-            Close();
+            if (!File.Exists("save.txt"))
+            {
+                MainWindow mainWindow = new(false);
+                mainWindow.Show();
+                Close();
+                return;
+            }
+            MessageBoxResult result = MessageBox.Show("Your current save might be lost. Are you sure?", "Confirm", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    MainWindow mainWindow = new(false);
+                    mainWindow.Show();
+                    Close();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
         public StartWindow()
         {

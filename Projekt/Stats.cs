@@ -89,6 +89,16 @@
                 TotalMoneyChangedEvent.Invoke();
             }
         }
+        private int _resetsPerformed = 0;
+        public int ResetsPerformed
+        {
+            get { return _resetsPerformed; }
+            set
+            {
+                _resetsPerformed = value;
+                OnPropertyChanged();
+            }
+        }
 
         public void ClickPerformed()
         {
@@ -108,6 +118,7 @@
             ClicksThisReset = 0;
             TickMoneyThisReset = 0;
             ClickMoneyThisReset = 0;
+            ResetsPerformed++;
         }
         public Stats() { }
     }

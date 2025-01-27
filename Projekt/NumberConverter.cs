@@ -14,9 +14,9 @@ namespace Projekt
             int lg = Math.Max(0, (int)Math.Log10(val) / 3);
             if (lg < 12)
             {
-                return string.Format("{0:0.##}{1}", val / Math.Pow(1000, lg), illions[lg]);
+                return string.Format(culture,"{0:0.##}{1}", val / Math.Pow(1000, lg), illions[lg]);
             }
-            return string.Format("{0:0.###E-000}", val);
+            return string.Format(culture, "{0:0.###E-000}", val);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

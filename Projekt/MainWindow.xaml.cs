@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
@@ -17,6 +18,7 @@ namespace Projekt
         private List<TickUpgrade> TickUpgrs = [];
         private List<ClickUpgrade> ClickUpgrs = [];
         private Stats stats;
+        private Options options;
         private event ClickPerformed ClickPerformedEvent;
         private event TickPerformed TickPerformedEvent;
         private event ResetPerformed ResetPerformedEvent;
@@ -45,6 +47,10 @@ namespace Projekt
             file.WriteLine(stats.TotalClickMoney);
             file.WriteLine(stats.TickMoneyThisReset);
             file.WriteLine(stats.TotalTickMoney);
+
+            file.WriteLine(stats.ResetsPerformed);
+
+            file.WriteLine(options.AutoSave);
             file.Close();
         }
 
@@ -54,6 +60,8 @@ namespace Projekt
         }
         private void Load()
         {
+            if (!File.Exists("save.txt"))
+                return;
             var file = new StreamReader("save.txt");
             account.ClickMoney = Convert.ToDouble(file.ReadLine());
             account.TickMoney = Convert.ToDouble(file.ReadLine());
@@ -82,6 +90,10 @@ namespace Projekt
             stats.TotalClickMoney = Convert.ToDouble(file.ReadLine());
             stats.TickMoneyThisReset = Convert.ToDouble(file.ReadLine());
             stats.TotalTickMoney = Convert.ToDouble(file.ReadLine());
+
+            stats.ResetsPerformed = Convert.ToInt32(file.ReadLine());
+
+            options.AutoSave = (file.ReadLine()=="True");
             file.Close();
         }
         private void LoadButtonClicked(object sender, RoutedEventArgs e)
@@ -115,8 +127,16 @@ namespace Projekt
         }
         private void ResetButtonClicked(object sender, RoutedEventArgs e)
         {
-            account.ResetPoints = account.PotentialResetPoints;
-            ResetPerformedEvent.Invoke();
+            MessageBoxResult result = MessageBox.Show("Your will lose your Coins and Upgrades. Are you sure?", "Confirm", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    account.ResetPoints = account.PotentialResetPoints;
+                    ResetPerformedEvent.Invoke();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -124,15 +144,24 @@ namespace Projekt
             TickPerformed();
         }
 
+        private void WindowClosed(object sender, CancelEventArgs e)
+        {
+            if(options.AutoSave)
+                Save();
+        }
+
         public void Initialize()
         {
-
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
             stats = new();
             StatsStackPanel.DataContext = stats;
             ClickPerformedEvent += stats.ClickPerformed;
             TickPerformedEvent += stats.TickPerformed;
             ResetPerformedEvent += stats.ResetPerformed;
+
+            options = new();
+            AutoSaveCheckBox.DataContext = options;
 
             account = new Account(stats);
             ClickMoneyText.DataContext = account;

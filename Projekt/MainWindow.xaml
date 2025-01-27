@@ -1,4 +1,5 @@
-﻿<Window x:Class="Projekt.MainWindow"
+﻿<Window Closing="WindowClosed"
+        x:Class="Projekt.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,6 +7,7 @@
         xmlns:local="clr-namespace:Projekt"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
+    
 
     <Window.Resources>
         <local:NumberConverter x:Key="numberConverter" />
@@ -121,10 +123,12 @@
         <TabItem Header="Reset">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="GhostWhite"/>
-                <StackPanel Name="ResetStackPanel" Width="200" VerticalAlignment="Center">
-                    <Button Content="Reset" Height="70" Click="ResetButtonClicked"></Button>
-                    <TextBlock Text="{Binding ResetPoints, StringFormat=Current Reset Points: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
-                    <TextBlock Text="{Binding PotentialResetPoints, StringFormat=Reset Points after reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                <StackPanel Name="ResetStackPanel" Width="250" VerticalAlignment="Center">
+                    <Button Content="Reset" Height="70" Width="150" Click="ResetButtonClicked" Background="LightGreen"></Button>
+                    <TextBlock Text="{Binding ResetPoints, StringFormat=Current Reset Points: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,0,0" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding PotentialResetPoints, StringFormat=Reset Points after reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,0,0" HorizontalAlignment="Center"></TextBlock>
+                    
+                    <TextBlock Text="Each Reset Point gives you 1% more income" Margin="0,10,0,0"></TextBlock>
                 </StackPanel>
             </Grid>
         </TabItem>
@@ -134,15 +138,17 @@
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="GhostWhite"/>
                 <StackPanel Name="StatsStackPanel"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <TextBlock Text="{Binding ClicksThisReset, StringFormat=Clicks this reset: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
-                    <TextBlock Text="{Binding TotalClicks, StringFormat=Total clicks: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
-                    <TextBlock Text="{Binding TicksThisReset, StringFormat=Ticks this reset: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
-                    <TextBlock Text="{Binding TotalTicks, StringFormat=Total ticks: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding ClicksThisReset, StringFormat=Clicks this reset: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalClicks, StringFormat=Total clicks: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TicksThisReset, StringFormat=Ticks this reset: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalTicks, StringFormat=Total ticks: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
 
-                    <TextBlock Text="{Binding ClickMoneyThisReset, StringFormat=Click money this reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
-                    <TextBlock Text="{Binding TotalClickMoney, StringFormat=Total clicks money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
-                    <TextBlock Text="{Binding TickMoneyThisReset, StringFormat=Tick money this reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
-                    <TextBlock Text="{Binding TotalTickMoney, StringFormat=Total tick money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0"></TextBlock>
+                    <TextBlock Text="{Binding ClickMoneyThisReset, StringFormat=Click money this reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalClickMoney, StringFormat=Total clicks money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TickMoneyThisReset, StringFormat=Tick money this reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalTickMoney, StringFormat=Total tick money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
+
+                    <TextBlock Text="{Binding ResetsPerformed, StringFormat=Resets Performed: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
                 </StackPanel>
             </Grid>
         </TabItem>
@@ -150,14 +156,19 @@
         <TabItem Header="Options">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="GhostWhite"/>
-                <StackPanel Width="100" VerticalAlignment="Center">
+                <StackPanel Width="200" VerticalAlignment="Center">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Margin" Value="0,10,0,0"/>
+                            <Setter Property="Height" Value="50"/>
+                            <Setter Property="Width" Value="100"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Button Content="Save" Height="50" Click="SaveButtonClicked"></Button>
-                    <Button Content="Load" Height="50" Click="LoadButtonClicked"></Button>
+                    <Button Content="Save" Click="SaveButtonClicked"></Button>
+                    <Button Content="Load" Click="LoadButtonClicked"></Button>
+                    <CheckBox Name="AutoSaveCheckBox" IsChecked="{Binding AutoSave, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,25,0,0">
+                        <TextBlock Text="Auto save when closing game"/>
+                    </CheckBox>
                 </StackPanel>
             </Grid>
         </TabItem>
