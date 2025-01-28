@@ -134,7 +134,7 @@ namespace Projekt
             }
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             TickPerformed();
         }
@@ -190,7 +190,7 @@ namespace Projekt
             ClickContr.ItemsSource = ClickUpgrs;
             TickContr.ItemsSource = TickUpgrs;
             DispatcherTimer dispatcherTimer = new();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
         }
