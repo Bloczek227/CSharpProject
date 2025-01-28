@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -29,14 +30,8 @@ namespace Projekt
             file.WriteLine(account.TickMoney);
             file.WriteLine(account.ResetPoints);
 
-            foreach (var tickUpgr in TickUpgrs)
-            {
-                file.WriteLine("{0} {1} {2}", tickUpgr.Count, tickUpgr.BoughtCount, tickUpgr.Cost);
-            }
-            foreach (var clickUpgr in ClickUpgrs)
-            {
-                file.WriteLine("{0} {1} {2}", clickUpgr.Count, clickUpgr.BoughtCount, clickUpgr.Cost);
-            }
+            file.WriteLine(String.Join('\n', TickUpgrs.Select(x => String.Format("{0} {1} {2}", x.Count, x.BoughtCount, x.Cost)).ToArray()));
+            file.WriteLine(String.Join('\n', ClickUpgrs.Select(x => String.Format("{0} {1} {2}", x.Count, x.BoughtCount, x.Cost)).ToArray()));
 
             file.WriteLine(stats.ClicksThisReset);
             file.WriteLine(stats.TotalClicks);

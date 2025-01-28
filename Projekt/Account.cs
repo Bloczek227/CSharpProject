@@ -75,7 +75,10 @@ namespace Projekt
         }
         public void ClickPerformed()
         {
-            ClickMoney += (1 + 0.01 * ResetPoints);
+            double result = (1 + 0.01 * ResetPoints);
+            ClickMoney += result;
+            Statistics.TotalClickMoney += result;
+            Statistics.ClickMoneyThisReset += result;
         }
         public void ResetPerformed()
         {
