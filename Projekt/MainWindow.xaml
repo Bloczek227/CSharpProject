@@ -144,7 +144,7 @@
                     <TextBlock Text="{Binding TotalTicks, StringFormat=Total ticks: {0}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
 
                     <TextBlock Text="{Binding ClickMoneyThisReset, StringFormat=Click money this reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
-                    <TextBlock Text="{Binding TotalClickMoney, StringFormat=Total clicks money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
+                    <TextBlock Text="{Binding TotalClickMoney, StringFormat=Total click money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
                     <TextBlock Text="{Binding TickMoneyThisReset, StringFormat=Tick money this reset: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
                     <TextBlock Text="{Binding TotalTickMoney, StringFormat=Total tick money: {0}, Converter={StaticResource numberConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,0,0"></TextBlock>
 
